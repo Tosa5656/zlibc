@@ -1,6 +1,5 @@
 #include <string.h>
 
-// TODO: when strcoll done rewrite function
 size_t strxfrm(char *__restrict destination_str, const char *__restrict source_str, size_t max_num_chars)
 {
 	size_t src_len = strlen(source_str);
