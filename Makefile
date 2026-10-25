@@ -1,6 +1,8 @@
 CC = x86_64-elf-gcc
 AR = x86_64-elf-ar
+AS = nasm
 CFLAGS = -Wall -Wextra -ffreestanding -nostdinc -O2 -Iinclude
+ASFLAGS = -f elf64
 
 SRCS = $(shell find . -path ./tests -prune -o -name "*.c" -print)
 OBJS = $(SRCS:.c=.o)
@@ -16,13 +18,16 @@ TEST_BIN = $(BUILD_DIR)/run_tests
 TEST_SRCS = $(wildcard tests/*.c) $(wildcard tests/*/*.c) $(wildcard src/string/*.c) $(wildcard src/ctype/*.c) $(wildcard src/errno.c)
 TEST_OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(TEST_SRCS))
 
-all: $(TARGET)
+all: $(TARGET) crt1.o
 
 $(TARGET): $(OBJS)
 	$(AR) rcs $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+crt1.o:
+	$(AS) $(ASFLAGS) src/crt/crt1.asm -o src/crt/crt1.o
 
 test: $(TEST_BIN)
 	./$(TEST_BIN)
