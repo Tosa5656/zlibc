@@ -13,6 +13,6 @@
 #define SYSCALL_RMDIR     84
 #define SYSCALL_UNLINK    87
 
-#define SYSCALL_UNLINK
+#define SYSCALL_MAX SYSCALL_UNLINK
 
 #endif

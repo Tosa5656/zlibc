@@ -1,0 +1,166 @@
+#include "test.h"
+
+struct expected_error
+{
+	const char *name;
+	int value;
+	int expected;
+};
+
+static const struct expected_error expected_errors[] =
+{
+	{ "EPERM", EPERM, 1 },
+	{ "ENOENT", ENOENT, 2 },
+	{ "ESRCH", ESRCH, 3 },
+	{ "EINTR", EINTR, 4 },
+	{ "EIO", EIO, 5 },
+	{ "ENXIO", ENXIO, 6 },
+	{ "E2BIG", E2BIG, 7 },
+	{ "ENOEXEC", ENOEXEC, 8 },
+	{ "EBADF", EBADF, 9 },
+	{ "ECHILD", ECHILD, 10 },
+	{ "EAGAIN", EAGAIN, 11 },
+	{ "ENOMEM", ENOMEM, 12 },
+	{ "EACCES", EACCES, 13 },
+	{ "EFAULT", EFAULT, 14 },
+	{ "ENOTBLK", ENOTBLK, 15 },
+	{ "EBUSY", EBUSY, 16 },
+	{ "EEXIST", EEXIST, 17 },
+	{ "EXDEV", EXDEV, 18 },
+	{ "ENODEV", ENODEV, 19 },
+	{ "ENOTDIR", ENOTDIR, 20 },
+	{ "EISDIR", EISDIR, 21 },
+	{ "EINVAL", EINVAL, 22 },
+	{ "ENFILE", ENFILE, 23 },
+	{ "EMFILE", EMFILE, 24 },
+	{ "ENOTTY", ENOTTY, 25 },
+	{ "ETXTBSY", ETXTBSY, 26 },
+	{ "EFBIG", EFBIG, 27 },
+	{ "ENOSPC", ENOSPC, 28 },
+	{ "ESPIPE", ESPIPE, 29 },
+	{ "EROFS", EROFS, 30 },
+	{ "EMLINK", EMLINK, 31 },
+	{ "EPIPE", EPIPE, 32 },
+	{ "EDOM", EDOM, 33 },
+	{ "ERANGE", ERANGE, 34 },
+	{ "EDEADLK", EDEADLK, 35 },
+	{ "ENAMETOOLONG", ENAMETOOLONG, 36 },
+	{ "ENOLCK", ENOLCK, 37 },
+	{ "ENOSYS", ENOSYS, 38 },
+	{ "ENOTEMPTY", ENOTEMPTY, 39 },
+	{ "ELOOP", ELOOP, 40 },
+	{ "ENOMSG", ENOMSG, 42 },
+	{ "EIDRM", EIDRM, 43 },
+	{ "ECHRNG", ECHRNG, 44 },
+	{ "EL2NSYNC", EL2NSYNC, 45 },
+	{ "EL3HLT", EL3HLT, 46 },
+	{ "EL3RST", EL3RST, 47 },
+	{ "ELNRNG", ELNRNG, 48 },
+	{ "EUNATCH", EUNATCH, 49 },
+	{ "ENOCSI", ENOCSI, 50 },
+	{ "EL2HLT", EL2HLT, 51 },
+	{ "EBADE", EBADE, 52 },
+	{ "EBADR", EBADR, 53 },
+	{ "EXFULL", EXFULL, 54 },
+	{ "ENOANO", ENOANO, 55 },
+	{ "EBADRQC", EBADRQC, 56 },
+	{ "EBADSLT", EBADSLT, 57 },
+	{ "EBFONT", EBFONT, 59 },
+	{ "ENOSTR", ENOSTR, 60 },
+	{ "ENODATA", ENODATA, 61 },
+	{ "ETIME", ETIME, 62 },
+	{ "ENOSR", ENOSR, 63 },
+	{ "ENONET", ENONET, 64 },
+	{ "ENOPKG", ENOPKG, 65 },
+	{ "EREMOTE", EREMOTE, 66 },
+	{ "ENOLINK", ENOLINK, 67 },
+	{ "EADV", EADV, 68 },
+	{ "ESRMNT", ESRMNT, 69 },
+	{ "ECOMM", ECOMM, 70 },
+	{ "EPROTO", EPROTO, 71 },
+	{ "EMULTIHOP", EMULTIHOP, 72 },
+	{ "EDOTDOT", EDOTDOT, 73 },
+	{ "EBADMSG", EBADMSG, 74 },
+	{ "EOVERFLOW", EOVERFLOW, 75 },
+	{ "ENOTUNIQ", ENOTUNIQ, 76 },
+	{ "EBADFD", EBADFD, 77 },
+	{ "EREMCHG", EREMCHG, 78 },
+	{ "ELIBACC", ELIBACC, 79 },
+	{ "ELIBBAD", ELIBBAD, 80 },
+	{ "ELIBSCN", ELIBSCN, 81 },
+	{ "ELIBMAX", ELIBMAX, 82 },
+	{ "ELIBEXEC", ELIBEXEC, 83 },
+	{ "EILSEQ", EILSEQ, 84 },
+	{ "ERESTART", ERESTART, 85 },
+	{ "ESTRPIPE", ESTRPIPE, 86 },
+	{ "EUSERS", EUSERS, 87 },
+	{ "ENOTSOCK", ENOTSOCK, 88 },
+	{ "EDESTADDRREQ", EDESTADDRREQ, 89 },
+	{ "EMSGSIZE", EMSGSIZE, 90 },
+	{ "EPROTOTYPE", EPROTOTYPE, 91 },
+	{ "ENOPROTOOPT", ENOPROTOOPT, 92 },
+	{ "EPROTONOSUPPORT", EPROTONOSUPPORT, 93 },
+	{ "ESOCKTNOSUPPORT", ESOCKTNOSUPPORT, 94 },
+	{ "EOPNOTSUPP", EOPNOTSUPP, 95 },
+	{ "EPFNOSUPPORT", EPFNOSUPPORT, 96 },
+	{ "EAFNOSUPPORT", EAFNOSUPPORT, 97 },
+	{ "EADDRINUSE", EADDRINUSE, 98 },
+	{ "EADDRNOTAVAIL", EADDRNOTAVAIL, 99 },
+	{ "ENETDOWN", ENETDOWN, 100 },
+	{ "ENETUNREACH", ENETUNREACH, 101 },
+	{ "ENETRESET", ENETRESET, 102 },
+	{ "ECONNABORTED", ECONNABORTED, 103 },
+	{ "ECONNRESET", ECONNRESET, 104 },
+	{ "ENOBUFS", ENOBUFS, 105 },
+	{ "EISCONN", EISCONN, 106 },
+	{ "ENOTCONN", ENOTCONN, 107 },
+	{ "ESHUTDOWN", ESHUTDOWN, 108 },
+	{ "ETOOMANYREFS", ETOOMANYREFS, 109 },
+	{ "ETIMEDOUT", ETIMEDOUT, 110 },
+	{ "ECONNREFUSED", ECONNREFUSED, 111 },
+	{ "EHOSTDOWN", EHOSTDOWN, 112 },
+	{ "EHOSTUNREACH", EHOSTUNREACH, 113 },
+	{ "EALREADY", EALREADY, 114 },
+	{ "EINPROGRESS", EINPROGRESS, 115 },
+	{ "ESTALE", ESTALE, 116 },
+	{ "EUCLEAN", EUCLEAN, 117 },
+	{ "ENOTNAM", ENOTNAM, 118 },
+	{ "ENAVAIL", ENAVAIL, 119 },
+	{ "EISNAM", EISNAM, 120 },
+	{ "EREMOTEIO", EREMOTEIO, 121 },
+	{ "EDQUOT", EDQUOT, 122 },
+	{ "ENOMEDIUM", ENOMEDIUM, 123 },
+	{ "EMEDIUMTYPE", EMEDIUMTYPE, 124 },
+	{ "ECANCELED", ECANCELED, 125 },
+	{ "ENOKEY", ENOKEY, 126 },
+	{ "EKEYEXPIRED", EKEYEXPIRED, 127 },
+	{ "EKEYREVOKED", EKEYREVOKED, 128 },
+	{ "EKEYREJECTED", EKEYREJECTED, 129 },
+	{ "EOWNERDEAD", EOWNERDEAD, 130 },
+	{ "ENOTRECOVERABLE", ENOTRECOVERABLE, 131 },
+	{ "ERFKILL", ERFKILL, 132 },
+	{ "EHWPOISON", EHWPOISON, 133 }
+};
+
+void test_error_constants(void)
+{
+	size_t index;
+
+	test_suite("error constants");
+
+	for (index = 0; index < sizeof(expected_errors) / sizeof(expected_errors[0]); index++)
+	{
+		const struct expected_error *entry = &expected_errors[index];
+
+		test_checks++;
+		if (entry->value != entry->expected)
+		{
+			test_fail(__FILE__, __LINE__, "%s is %d, want %d",
+				entry->name, entry->value, entry->expected);
+		}
+	}
+
+	CHECK_INT(EWOULDBLOCK, EAGAIN);
+	CHECK_INT(EDEADLOCK, EDEADLK);
+	CHECK_INT(ENOTSUP, EOPNOTSUPP);
+}

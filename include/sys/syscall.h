@@ -1,6 +1,7 @@
 #ifndef SYSCALL_H
 #define SYSCALL_H
 
+#include <errno.h>
 #include "syscalls.h"
 
 static __inline long __syscall0(long n)
@@ -61,6 +62,17 @@ static __inline long __syscall6(long n, long a1, long a2, long a3, long a4, long
 	__asm__ __volatile__ ("syscall" : "=a"(ret) : "a"(n), "D"(a1), "S"(a2),
 						  "d"(a3), "r"(r10), "r"(r8), "r"(r9) : "rcx", "r11", "memory");
 	return ret;
+}
+
+static __inline long __syscall_ret(unsigned long sys_result)
+{
+    if (sys_result >= (unsigned long)-4095)
+	{
+        errno = -(long)sys_result; 
+        return -1;
+    }
+    
+    return (long)sys_result;
 }
 
 #endif
