@@ -6,22 +6,9 @@
 
 void test_ctype(void);
 
-/*
- * Checks a character classification function over EOF (-1) and every byte
- * value (0..255). The expected result is nonzero when the value falls into
- * one of the inclusive [low, high] ranges in "ranges" (stored as
- * { low0, high0, low1, high1, ... }) and zero otherwise.
- */
-void test_ctype_class(const char *function_name, int (*function)(int),
-	const int *ranges, size_t range_count);
+void test_ctype_class(const char *function_name, int (*function)(int), const int *ranges, size_t range_count);
 
-/*
- * Checks a case conversion function over EOF (-1) and every byte value
- * (0..255). Values inside "ranges" are expected to be shifted by "offset",
- * every other value must be returned unchanged.
- */
-void test_ctype_case(const char *function_name, int (*function)(int),
-	const int *ranges, size_t range_count, int offset);
+void test_ctype_case(const char *function_name, int (*function)(int), const int *ranges, size_t range_count, int offset);
 
 void test_isalnum(void);
 void test_isalpha(void);

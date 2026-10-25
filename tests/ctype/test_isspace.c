@@ -2,7 +2,6 @@
 
 void test_isspace(void)
 {
-	/* Space and the standard white-space controls \t \n \v \f \r. */
 	static const int ranges[] = { '\t', '\r', ' ', ' ' };
 
 	test_suite("isspace");

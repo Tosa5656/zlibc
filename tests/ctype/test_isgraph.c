@@ -2,7 +2,6 @@
 
 void test_isgraph(void)
 {
-	/* Printable characters excluding the space. */
 	static const int ranges[] = { '!', '~' };
 
 	test_suite("isgraph");

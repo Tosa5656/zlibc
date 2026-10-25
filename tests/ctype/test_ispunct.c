@@ -2,7 +2,6 @@
 
 void test_ispunct(void)
 {
-	/* Printable characters that are neither alphanumeric nor a space. */
 	static const int ranges[] = { '!', '/', ':', '@', '[', '`', '{', '~' };
 
 	test_suite("ispunct");

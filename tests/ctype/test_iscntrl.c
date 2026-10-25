@@ -2,7 +2,6 @@
 
 void test_iscntrl(void)
 {
-	/* NUL..US and DEL. */
 	static const int ranges[] = { 0, 31, 127, 127 };
 
 	test_suite("iscntrl");

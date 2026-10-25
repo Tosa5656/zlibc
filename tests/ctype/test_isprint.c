@@ -2,7 +2,6 @@
 
 void test_isprint(void)
 {
-	/* Space through tilde. */
 	static const int ranges[] = { ' ', '~' };
 
 	test_suite("isprint");
