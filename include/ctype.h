@@ -1,6 +1,8 @@
 #ifndef _CTYPE_H
 #define _CTYPE_H
 
+#include <alltypes.h>
+
 int isalnum(int target_char);
 int isalpha(int target_char);
 int isblank(int target_char);

@@ -1,6 +1,8 @@
 #ifndef _STDDEF_H
 #define _STDDEF_H
 
+#include <alltypes.h>
+
 #ifndef _SIZE_T
 #define _SIZE_T
 typedef __SIZE_TYPE__ size_t;
