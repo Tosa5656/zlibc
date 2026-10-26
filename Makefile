@@ -10,12 +10,12 @@ OBJS = $(SRCS:.c=.o)
 TARGET = libc.a
 
 HOSTCC = gcc
-HOSTCFLAGS = -Wall -Wextra -g -O1 -fno-builtin -no-pie
+HOSTCFLAGS = -Wall -Wextra -g -O1 -fno-builtin -no-pie -Iinclude
 HOST_LIB_CFLAGS = -Wall -Wextra -ffreestanding -g -O2 -Iinclude -fno-builtin -fno-tree-loop-distribute-patterns -fno-pic -fno-pie -fno-stack-protector
 
 BUILD_DIR = build/test
 TEST_BIN = $(BUILD_DIR)/run_tests
-TEST_SRCS = $(wildcard tests/*.c) $(wildcard tests/*/*.c) $(wildcard src/string/*.c) $(wildcard src/ctype/*.c) $(wildcard src/stdlib/*.c) $(wildcard src/errno.c)
+TEST_SRCS = $(wildcard tests/*.c) $(wildcard tests/*/*.c) $(wildcard src/string/*.c) $(wildcard src/ctype/*.c) $(wildcard src/stdlib/*.c) $(wildcard src/stdio/*.c) $(wildcard src/errno.c)
 TEST_OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(TEST_SRCS))
 
 all: $(TARGET) crt1.o
@@ -52,6 +52,10 @@ $(BUILD_DIR)/src/errno.o: src/errno.c
 	$(HOSTCC) $(HOST_LIB_CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/src/stdlib/%.o: src/stdlib/%.c
+	@mkdir -p $(dir $@)
+	$(HOSTCC) $(HOST_LIB_CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/src/stdio/%.o: src/stdio/%.c
 	@mkdir -p $(dir $@)
 	$(HOSTCC) $(HOST_LIB_CFLAGS) -c $< -o $@
 

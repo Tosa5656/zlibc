@@ -1,0 +1,36 @@
+#ifndef LIMITS_H
+#define LIMITS_H
+
+#include <alltypes.h>
+
+#define CHAR_BIT  8
+
+#define SCHAR_MIN (-128)
+#define SCHAR_MAX 127
+#define UCHAR_MAX 255
+
+#define SHRT_MIN  (-32768)
+#define SHRT_MAX  32767
+#define USHRT_MAX 65535
+
+#define INT_MIN   (-0x7FFFFFFF - 1)
+#define INT_MAX   0x7FFFFFFF
+#define UINT_MAX  0xFFFFFFFFU
+
+#define LONG_MIN  (-0x7FFFFFFFFFFFFFFFL - 1)
+#define LONG_MAX  0x7FFFFFFFFFFFFFFFL
+#define ULONG_MAX 0xFFFFFFFFFFFFFFFFUL
+
+#define LLONG_MIN (-0x7FFFFFFFFFFFFFFFLL - 1)
+#define LLONG_MAX 0x7FFFFFFFFFFFFFFFLL
+#define ULLONG_MAX 0xFFFFFFFFFFFFFFFFULL
+
+#define CHAR_MIN SCHAR_MIN
+#define CHAR_MAX SCHAR_MAX
+
+#define MB_LEN_MAX 4
+
+#define NL_ARGMAX 9
+#define RLIM_INFINITY ((unsigned long)-1)
+
+#endif

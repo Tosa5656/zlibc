@@ -5,6 +5,13 @@
 #define __BIG_ENDIAN 4321
 #define __USE_TIME_BITS64 1
 
+#define _Addr long
+#define _Reg long
+#define _Int64 long
+#define __BYTE_ORDER 1234
+
+#include <stddef.h>
+
 typedef unsigned _Addr size_t;
 typedef unsigned _Addr uintptr_t;
 typedef _Addr ptrdiff_t;
@@ -62,7 +69,7 @@ typedef struct { unsigned __attr; } pthread_condattr_t;
 typedef struct { unsigned __attr; } pthread_barrierattr_t;
 typedef struct { unsigned __attr[2]; } pthread_rwlockattr_t;
 
-struct _IO_FILE { char __x; };
+struct _IO_FILE;
 typedef struct _IO_FILE FILE;
 
 typedef __builtin_va_list va_list;

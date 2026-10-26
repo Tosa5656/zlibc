@@ -4,6 +4,18 @@
 #include <errno.h>
 #include "syscalls.h"
 
+#define __syscall_narg(...) __syscall_narg_(__VA_ARGS__, 6, 5, 4, 3, 2, 1, 0)
+#define __syscall_narg_(_0, _1, _2, _3, _4, _5, _6, n, ...) n
+
+#define __syscall_concat(a, b) __syscall_concat_(a, b)
+#define __syscall_concat_(a, b) a ## b
+
+#define __syscall_eval(n, ...) __syscall_concat(__syscall, n)(__VA_ARGS__)
+
+#define __syscall(...) __syscall_eval(__syscall_narg(__VA_ARGS__), __VA_ARGS__)
+
+#define syscall_cp(...) __syscall(__VA_ARGS__)
+
 static __inline long __syscall0(long n)
 {
 	unsigned long ret;

@@ -3,7 +3,7 @@
 
 #define __NEED_va_list
 
-#include <bits/alltypes.h>
+#include <alltypes.h>
 
 #define va_start(v,l) __builtin_va_start(v,l)
 #define va_end(v) __builtin_va_end(v)

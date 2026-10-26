@@ -347,12 +347,14 @@ long double strtold(const char *nptr, char **endptr)
 		*endptr = (char *)cursor;
 	}
 
-	long long positional = state.integer_digits - (state.start_index + state.absorbed - 1) + state.exponent;
+	long long positional = state.integer_digits - (state.start_index + state.absorbed - 1);
 
 	if (is_hex)
 	{
 		positional *= 4;
 	}
+
+	positional += state.exponent;
 
 	result = (long double)state.mantissa;
 
